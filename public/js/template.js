@@ -46,5 +46,7 @@
                 sendMessage(getMessageText());
             }
         });
+
+        sendMessage('Hi Sandy! How are you?');
     });
 }.call(this));

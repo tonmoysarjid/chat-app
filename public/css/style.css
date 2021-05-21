@@ -223,3 +223,11 @@ body {
 .message_template {
     display: none;
 }
+
+.name-wrapper {
+    position: center;
+    padding-left: 10px;
+    font-family: cursive;
+    font-weight: 120;
+    color: black;
+}
