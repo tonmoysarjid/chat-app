@@ -8,19 +8,22 @@ const io = new Server(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-let name;
+let name = {};
 
 io.on('connection', (socket) => {
     socket.on('message', (msg, id) => {
-        let msgObj = { "id": id, "msg": msg, "name": name };
+        if (!name[id])
+            name[id] = "random-User";
+        let msgObj = { "id": id, "msg": msg, "name": name[id] };
         io.emit('message', msgObj);
     });
-    socket.on('setname', (msg) => {
-        name = msg;
+    socket.on('setname', (msg, id) => {
+        name[id] = msg;
     });
 });
 
+
 const port = process.env.PORT || 3000;
 server.listen(port, function() {
-    console.log("listeing on port".port);
+    console.log("listeing on port - " + port);
 });

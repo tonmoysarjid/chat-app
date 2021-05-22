@@ -6,21 +6,14 @@ let submitText = document.querySelector('.message_input');
 let button = document.querySelector('.send_message');
 
 const identify = Date.now() + Math.round(Math.random() * 100000);
-
-console.log(identify);
-
+console.log(socket.identify);
 const pushMsg = new PushMsg();
 submitText.addEventListener("keyup", function(e) {
     e.preventDefault();
     let key = e.which || e.keyCode || 0;
-    if (key === 13) {
-        emitMsg();
-    }
-    button.addEventListener("click", function(e) {
-        emitMsg();
-    });
-
+    if (key === 13) emitMsg();
 });
+button.addEventListener("click", (e) => emitMsg());
 
 socket.on("message", (msg) => {
     let message = msg.name + ":\n" + msg.msg;
@@ -40,7 +33,7 @@ function saveChatName() {
 
     let chatName = document.querySelector('#chat_name');
     if (chatName.value) {
-        socket.emit('setname', chatName.value);
+        socket.emit('setname', chatName.value, identify);
         $('.modal').hide();
     }
 
