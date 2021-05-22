@@ -6,15 +6,19 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-
 app.use(express.static(path.join(__dirname, 'public')));
-let name = "";
 
+
+let name;
 
 io.on('connection', (socket) => {
-    socket.on('message', (msg) => {
-        io.emit('message', msg);
-        console.log(msg);
+    socket.on('message', (msg, id) => {
+        let msgObj = { "id": id, "msg": msg, "name": name };
+        io.emit('message', msgObj);
+    });
+
+    socket.on('setname', (msg) => {
+        name = msg;
     });
 });
 
