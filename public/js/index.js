@@ -1,29 +1,31 @@
 let socket = io();
 let messages = document.getElementById('messages');
 let form = document.getElementById('form');
-let form_name = document.getElementById('form-name');
-let input = document.getElementById('input');
-let input_name = document.getElementById('input_name');
+let messageText = document.getElementById('message_text');
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-        socket.emit('message', input.value);
-        input.value = '';
+let submitText = document.querySelector('.message_input');
+let button = document.querySelector('.send_message');
+
+submitText.addEventListener("keyup", function(e) {
+    event.preventDefault();
+    let key = e.which || e.keyCode || 0;
+    if (key === 13) {
+        EmitMsg();
     }
+
+    button.addEventListener("click", function(e) {
+        EmitMsg();
+    });
+
 });
 
-form_name.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input_name.value) {
-        socket.emit('set_name', input_name.value);
-        input_name.value = '';
+socket.on("message", (msg) => {
+    sendMessage(msg);
+});
+
+function EmitMsg() {
+    if (messageText.value) {
+        socket.emit('message', messageText.value);
     }
-});
-
-socket.on('message', function(msg) {
-    let item = document.createElement('li');
-    item.textContent = msg.name + " : " + msg.msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-});
+    messageText.value = "";
+}

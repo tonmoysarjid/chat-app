@@ -8,28 +8,13 @@ const io = new Server(server);
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-// app.get('/', (req, res) => {
-//     //res.sendFile(__dirname + '/index.html');
-// });
 let name = "";
 
-io.on('connection', (socket) => {
-    socket.on('set_name', (msg) => {
-        name = msg;
-    });
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-});
 
 io.on('connection', (socket) => {
     socket.on('message', (msg) => {
-        let obj = {
-            msg: msg,
-            name: name
-        };
-        io.emit('message', obj);
+        io.emit('message', msg);
+        console.log(msg);
     });
 });
 
