@@ -14,20 +14,24 @@ const Message = function(arg) {
     return this;
 };
 
-let getMessageText, message_side, sendMessage;
-message_side = 'right';
-sendMessage = function(text) {
-    var $messages, message;
-    if (text.trim() === '') {
-        return;
+class SendMsg {
+    constructor() {
+        this.message_side = 'right';
     }
-    $('.message_input').val('');
-    $messages = $('.messages');
-    message_side = message_side === 'left' ? 'right' : 'left';
-    message = new Message({
-        text: text,
-        message_side: message_side
-    });
-    message.draw();
-    $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
-};
+    sendMessage(text) {
+        var $messages, message;
+        if (text.trim() === '') {
+            return;
+        }
+        $('.message_input').val('');
+        $messages = $('.messages');
+        this.message_side = this.message_side === 'left' ? 'right' : 'left';
+        message = new Message({
+            text: text,
+            message_side: this.message_side
+        });
+        message.draw();
+        $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+    }
+
+}

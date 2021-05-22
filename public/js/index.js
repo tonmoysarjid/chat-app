@@ -2,9 +2,10 @@ let socket = io();
 let messages = document.getElementById('messages');
 let form = document.getElementById('form');
 let messageText = document.getElementById('message_text');
-
 let submitText = document.querySelector('.message_input');
 let button = document.querySelector('.send_message');
+
+const send = new SendMsg();
 
 submitText.addEventListener("keyup", function(e) {
     event.preventDefault();
@@ -20,7 +21,7 @@ submitText.addEventListener("keyup", function(e) {
 });
 
 socket.on("message", (msg) => {
-    sendMessage(msg);
+    send.sendMessage(msg);
 });
 
 function EmitMsg() {
