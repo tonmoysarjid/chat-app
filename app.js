@@ -8,7 +8,6 @@ const io = new Server(server);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 let name;
 
 io.on('connection', (socket) => {
@@ -16,7 +15,6 @@ io.on('connection', (socket) => {
         let msgObj = { "id": id, "msg": msg, "name": name };
         io.emit('message', msgObj);
     });
-
     socket.on('setname', (msg) => {
         name = msg;
     });

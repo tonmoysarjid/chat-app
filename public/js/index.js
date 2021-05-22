@@ -11,14 +11,13 @@ console.log(identify);
 
 const pushMsg = new PushMsg();
 submitText.addEventListener("keyup", function(e) {
-    event.preventDefault();
+    e.preventDefault();
     let key = e.which || e.keyCode || 0;
     if (key === 13) {
-        EmitMsg();
+        emitMsg();
     }
-
     button.addEventListener("click", function(e) {
-        EmitMsg();
+        emitMsg();
     });
 
 });
@@ -30,7 +29,7 @@ socket.on("message", (msg) => {
     pushMsg.sendMessage(message, message_side);
 });
 
-function EmitMsg() {
+function emitMsg() {
     if (messageText.value) {
         socket.emit('message', messageText.value, identify);
     }
