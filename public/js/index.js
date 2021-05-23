@@ -4,9 +4,9 @@ let form = document.getElementById('form');
 let messageText = document.getElementById('message_text');
 let submitText = document.querySelector('.message_input');
 let button = document.querySelector('.send_message');
-
+let userName = "";
 const identify = Date.now() + Math.round(Math.random() * 100000);
-console.log(socket.identify);
+
 const pushMsg = new PushMsg();
 submitText.addEventListener("keyup", function(e) {
     e.preventDefault();
@@ -24,7 +24,7 @@ socket.on("message", (msg) => {
 
 function emitMsg() {
     if (messageText.value) {
-        socket.emit('message', messageText.value, identify);
+        socket.emit('message', messageText.value, identify, userName);
     }
     messageText.value = "";
 }
@@ -33,7 +33,7 @@ function saveChatName() {
 
     let chatName = document.querySelector('#chat_name');
     if (chatName.value) {
-        socket.emit('setname', chatName.value, identify);
+        userName = chatName.value;
         $('.modal').hide();
     }
 
